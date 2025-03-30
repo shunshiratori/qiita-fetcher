@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "fetch:qiita": "node scripts/fetch-qiita.js",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -11,6 +12,8 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.17",
+    "dotenv": "^16.4.7",
+    "node-fetch": "^3.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.17"

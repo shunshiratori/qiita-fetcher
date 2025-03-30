@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
+import qiitaData from "../../public/qiita.json";
 
 type QiitaPosts = {
   created_at: string;
@@ -9,36 +10,36 @@ type QiitaPosts = {
 };
 
 function App() {
-  const [result, setResult] = useState<QiitaPosts[]>([]);
+  const [result, setResult] = useState<QiitaPosts[]>(qiitaData);
 
-  useEffect(() => {
-    const API_URL =
-      "https://qiita.com/api/v2/items?page=1&per_page=100&query=user:shun_shiratori";
+  // useEffect(() => {
+  //   const API_URL =
+  //     "https://qiita.com/api/v2/items?page=1&per_page=100&query=user:shun_shiratori";
 
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch(API_URL, {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_QIITA_API_KEY}`,
-          },
-        });
-        const data = await res.json();
-        console.log(data[0]);
-        const formatted: QiitaPosts[] = data
-          .map((post: QiitaPosts) => ({
-            title: post.title,
-            likes_count: post.likes_count,
-            created_at: new Date(post.created_at).toLocaleDateString(),
-            url: post.url,
-          }))
-          .slice(0, 5);
-        setResult(formatted);
-      } catch (error) {
-        console.error("エラーが発生しました:", error);
-      }
-    };
-    fetchPosts();
-  }, []);
+  //   const fetchPosts = async () => {
+  //     try {
+  //       const res = await fetch(API_URL, {
+  //         headers: {
+  //           Authorization: `Bearer ${import.meta.env.VITE_QIITA_API_KEY}`,
+  //         },
+  //       });
+  //       const data = await res.json();
+  //       console.log(data[0]);
+  //       const formatted: QiitaPosts[] = data
+  //         .map((post: QiitaPosts) => ({
+  //           title: post.title,
+  //           likes_count: post.likes_count,
+  //           created_at: new Date(post.created_at).toLocaleDateString(),
+  //           url: post.url,
+  //         }))
+  //         .slice(0, 5);
+  //       setResult(formatted);
+  //     } catch (error) {
+  //       console.error("エラーが発生しました:", error);
+  //     }
+  //   };
+  //   fetchPosts();
+  // }, []);
 
   console.log(result);
 
