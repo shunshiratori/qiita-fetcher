@@ -1,0 +1,35 @@
+name: Fetch Qiita Posts
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # 毎日 1:00 AM UTC = 10:00 AM JST
+  workflow_dispatch: # 手動でも実行できる
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Node.js をセットアップ
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 依存をインストール
+        run: npm install
+
+      - name: Qiita記事を取得してjsonを保存
+        run: node scripts/fetch-qiita.js
+        env:
+          VITE_QIITA_API_KEY: ${{ secrets.VITE_QIITA_API_KEY }}
+
+      - name: 変更をコミット & プッシュ
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/qiita.json
+          git commit -m '🔄 Qiita記事を自動更新'
+          git push
