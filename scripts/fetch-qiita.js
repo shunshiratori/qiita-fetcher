@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 import "dotenv/config";
 
 const API_URL =
-  "https://qiita.com/api/v2/items?page=1&per_page=100&query=user:morry_48";
+  "https://qiita.com/api/v2/items?page=1&per_page=100&query=user:shun_shiratori";
 
 const OUTPUT_PATH = path.resolve("public", "qiita.json");
 
