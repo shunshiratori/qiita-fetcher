@@ -2,7 +2,7 @@ name: Fetch Qiita Posts
 
 on:
   schedule:
-    - cron: "0 1 * * *" # 毎日 1:00 AM UTC = 10:00 AM JST
+    - cron: "0 * * * *" # 毎日 1:00 AM UTC = 10:00 AM JST
   workflow_dispatch: # 手動でも実行できる
 
 jobs:
