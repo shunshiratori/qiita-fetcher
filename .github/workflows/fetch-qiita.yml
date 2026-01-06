@@ -2,8 +2,8 @@ name: Fetch Qiita Posts
 
 on:
   schedule:
-    - cron: "0 1 * * *" # 毎日 1:00 AM UTC = 10:00 AM JST
-  workflow_dispatch: # 手動でも実行できる
+    - cron: "0 * * * *"
+  workflow_dispatch:
 
 jobs:
   fetch-and-commit:
@@ -30,6 +30,11 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      
           git add public/qiita.json
-          git commit -m '🔄 Qiita記事を自動更新'
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m '🔄 Qiita記事を自動更新'
+            git push
+          fi
